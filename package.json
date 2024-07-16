@@ -1,0 +1,34 @@
+{
+  "name": "ela",
+  "displayName": "easylang",
+  "description": "easylang support language extension",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "ela",
+        "aliases": [
+          "easylang",
+          "ela"
+        ],
+        "extensions": [
+          ".ela"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ela",
+        "scopeName": "source.ela",
+        "path": "./syntaxes/ela.tmLanguage.json"
+      }
+    ]
+  }
+}
