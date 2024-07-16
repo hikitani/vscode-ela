@@ -2,6 +2,12 @@
   "name": "ela",
   "displayName": "easylang",
   "description": "easylang support language extension",
+  "author": {
+    "email": "kazbekmamakaev@mail.ru",
+    "name": "hikitani",
+    "url": "https://github.com/hikitani"
+  },
+  "icon": "assets/ela-logo.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.91.0"
@@ -9,6 +15,10 @@
   "categories": [
     "Programming Languages"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hikitani/vscode-ela"
+  },
   "contributes": {
     "languages": [
       {
