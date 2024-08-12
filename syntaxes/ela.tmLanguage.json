@@ -3,36 +3,43 @@
   "name": "easylang",
   "patterns": [
     {
-      "include": "#comment"
-    },
-    {
-      "include": "#number"
-    },
-    {
-      "include": "#string"
-    },
-    {
-      "include": "#operator"
-    },
-    {
-      "include": "#const"
-    },
-    {
-      "include": "#keyword"
-    },
-    {
-      "include": "#params"
-    },
-    {
-      "include": "#ident"
+      "include": "#all"
     }
   ],
   "repository": {
+    "all": {
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "include": "#number"
+        },
+        {
+          "include": "#string"
+        },
+        {
+          "include": "#operator"
+        },
+        {
+          "include": "#const"
+        },
+        {
+          "include": "#keyword"
+        },
+        {
+          "include": "#params"
+        },
+        {
+          "include": "#ident"
+        }
+      ]
+    },
     "keyword": {
       "patterns": [
         {
           "name": "keyword.control.ela",
-          "match": "\\b(if|else|for|in|while|return|break|continue|block)\\b"
+          "match": "\\b(if|else|for|in|while|return|break|continue|block|import|using|pub)\\b"
         }
       ]
     },
@@ -68,8 +75,24 @@
       ]
     },
     "operator": {
-      "name": "keyword.operator",
-      "match": "==|!=|<=|>=|and|or|<|>|\\+|-|\\*|/|%|-|not"
+      "patterns": [
+        {
+          "name": "keyword.operator.comparison.ela",
+          "match": "==|!=|<=|>=|and|or|<|>"
+        },
+        {
+          "name": "keyword.operator.assignment.ela",
+          "match": "="
+        },
+        {
+          "name": "keyword.operator.arithmetic.ela",
+          "match": "\\+|-|\\*|/|%"
+        },
+        {
+          "name": "keyword.operator.logical.ela",
+          "match": "-|not"
+        }
+      ]
     },
     "comment": {
       "name": "comment.line.number-sign.ela",
@@ -77,21 +100,55 @@
       "end": "\n"
     },
     "ident": {
-      "name": "variable.name.ela",
-      "match": "\\b[a-zA-Z_](?:[a-zA-Z_]|[0-9])*\\b"
+      "patterns": [
+        {
+          "match": "\\b([a-zA-Z_](?:[a-zA-Z_]|[0-9])*)\\b\\((.*)?\\)",
+          "captures": {
+            "1": {
+              "name": "entity.name.function.support"
+            },
+            "2": {
+              "patterns": [
+                {
+                  "include": "#punctuation-comma"
+                },
+                {
+                  "include": "#number"
+                },
+                {
+                  "include": "#string"
+                },
+                {
+                  "include": "#const"
+                },
+                {
+                  "include": "#params"
+                },
+                {
+                  "include": "#ident"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "variable.other.ela",
+          "match": "\\b[a-zA-Z_](?:[a-zA-Z_]|[0-9])*\\b"
+        }
+      ]
     },
     "const": {
       "patterns": [
         {
-          "name": "constant.language.ela",
+          "name": "constant.language.boolean.ela",
           "match": "\\b(true)\\b"
         },
         {
-          "name": "constant.language.ela",
+          "name": "constant.language.boolean.ela",
           "match": "\\b(false)\\b"
         },
         {
-          "name": "constant.language.ela",
+          "name": "constant.language.null.ela",
           "match": "\\b(none)\\b"
         },
         {
@@ -101,15 +158,27 @@
       ]
     },
     "params": {
-      "name": "variable.parameter.list.ela",
-      "begin": "\\|",
-      "end": "\\|\\s*=>\\s*",
-      "patterns": [
-        {
-          "name": "variable.parameter.ela",
-          "match": "[a-zA-Z_](?:[a-zA-Z_]|[0-9])*"
-        }
-      ]
+      "match": "(\\|)([^\\|]*)?(\\|)\\s*=>\\s*(.*)?",
+      "captures": {
+        "1": { "name": "keyword.other.begin.straight.ela" },
+        "2": {
+          "patterns": [
+            {
+              "include": "#punctuation-comma"
+            },
+            {
+              "name": "variable.parameter.ela",
+              "match": "[a-zA-Z_](?:[a-zA-Z_]|[0-9])*"
+            }
+          ]
+        },
+        "3": { "name": "keyword.other.end.straight.ela" },
+        "4": { "patterns": [{ "include": "#all" }] }
+      }
+    },
+    "punctuation-comma": {
+      "name": "punctuation.other.comma.ela",
+      "match": ","
     }
   },
   "scopeName": "source.ela"
